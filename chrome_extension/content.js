@@ -48,12 +48,9 @@ const makeChangeShiftRequest = (originalShiftInfo) => {
     spinner.removeAttribute('hidden');
 
     fetch(ENDPOINT, {
-        method: "post",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
+        method: "post", headers: {
+            'Accept': 'application/json', 'Content-Type': 'application/json'
+        }, body: JSON.stringify({
             user: originalShiftInfo.split(',')[1].trim(),
             date: dateElement.previousSibling.textContent,
             time: dateElement.nextElementSibling.textContent,
@@ -63,8 +60,10 @@ const makeChangeShiftRequest = (originalShiftInfo) => {
             localStorage.setItem('replacement', data.name)
             spinner.setAttribute('hidden', '')
             alert('Se envió el solicitud de cambio de turno')
+            location.reload();
         }).catch(() => {
-            alert('Algo salió mal con la solicitud. Por favor, inténtelo de nuevo más tarde.')
+        spinner.setAttribute('hidden', '')
+        alert('Algo salió mal con la solicitud. Por favor, inténtelo de nuevo más tarde.')
     })
 
 
@@ -75,8 +74,9 @@ const insertChangeShiftOption = () => {
     const eventTitleElement = document.getElementById('rAECCd')
     let spinner = document.getElementById('spinner')
     if (spinner == null) {
-        spinner = $('<div hidden id="spinner">')
-        spinner.insertAfter(eventTitleElement);
+        spinner = document.createElement('div')
+        spinner.innerHTML = '<div hidden id="spinner">';
+        eventTitleElement.parentNode.insertBefore(spinner, eventTitleElement.nextSibling);
     }
     if (eventTitleElement) {
         const eventTitle = eventTitleElement.innerText
@@ -85,6 +85,8 @@ const insertChangeShiftOption = () => {
 
             let changeOption = document.getElementById('changeOption');
             if (changeOption == null) {
+                // changeOption = document.createElement('div')
+                // changeOption.innerHTML = '<div id="changeOption" role="button" class="U26fgb O0WRkf oG5Srb C0oVfc ZGVUP Ztzsdd KKjvXb M9Bg4d" jslog="122571; track:JIbuQc" jscontroller="VXdfxd"  jsname="lezaG" aria-label="Se ha seleccionado Responder &quot;Sí&quot;" aria-disabled="false" tabindex="0" ><div class="Vwe4Vb MbhUzd" jsname="ksKsZd"></div><div class="ZFr60d CeoRYc"></div><span jsslot="" class="CwaK9"><span class="RveJvd snByac"><span class="AclISc">Cambiar turno</span></span></span></div>';
                 changeOption = $('<div id="changeOption" role="button" class="U26fgb O0WRkf oG5Srb C0oVfc ZGVUP Ztzsdd KKjvXb M9Bg4d" jslog="122571; track:JIbuQc" jscontroller="VXdfxd"  jsname="lezaG" aria-label="Se ha seleccionado Responder &quot;Sí&quot;" aria-disabled="false" tabindex="0" ><div class="Vwe4Vb MbhUzd" jsname="ksKsZd"></div><div class="ZFr60d CeoRYc"></div><span jsslot="" class="CwaK9"><span class="RveJvd snByac"><span class="AclISc">Cambiar turno</span></span></span></div>');
                 changeOption.insertAfter(responseOptions);
 
@@ -105,8 +107,7 @@ const observer = new MutationObserver(function (mutations) {
 });
 
 observer.observe(document, {
-    subtree: true,
-    childList: true,
+    subtree: true, childList: true,
 });
 
 
