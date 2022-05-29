@@ -37,7 +37,9 @@ const insertChangeShiftOption = () => {
     if (spinner == null) {
         spinner = document.createElement('div')
         spinner.innerHTML = '<div hidden id="spinner">';
-        eventTitleElement.parentNode.insertBefore(spinner, eventTitleElement.nextSibling);
+        if (eventTitleElement) {
+            eventTitleElement.parentNode.insertBefore(spinner, eventTitleElement.nextSibling);
+        }
     }
     if (eventTitleElement) {
         const eventTitle = eventTitleElement.innerText
@@ -46,14 +48,14 @@ const insertChangeShiftOption = () => {
 
             let changeOption = document.getElementById('changeOption');
             if (changeOption == null) {
-                // changeOption = document.createElement('div')
-                // changeOption.innerHTML = '<div id="changeOption" role="button" class="U26fgb O0WRkf oG5Srb C0oVfc ZGVUP Ztzsdd KKjvXb M9Bg4d" jslog="122571; track:JIbuQc" jscontroller="VXdfxd"  jsname="lezaG" aria-label="Se ha seleccionado Responder &quot;Sí&quot;" aria-disabled="false" tabindex="0" ><div class="Vwe4Vb MbhUzd" jsname="ksKsZd"></div><div class="ZFr60d CeoRYc"></div><span jsslot="" class="CwaK9"><span class="RveJvd snByac"><span class="AclISc">Cambiar turno</span></span></span></div>';
-                changeOption = $('<div id="changeOption" role="button" class="U26fgb O0WRkf oG5Srb C0oVfc ZGVUP Ztzsdd KKjvXb M9Bg4d" jslog="122571; track:JIbuQc" jscontroller="VXdfxd"  jsname="lezaG" aria-label="Se ha seleccionado Responder &quot;Sí&quot;" aria-disabled="false" tabindex="0" ><div class="Vwe4Vb MbhUzd" jsname="ksKsZd"></div><div class="ZFr60d CeoRYc"></div><span jsslot="" class="CwaK9"><span class="RveJvd snByac"><span class="AclISc">Cambiar turno</span></span></span></div>');
-                changeOption.insertAfter(responseOptions);
-
-                changeOption.click(function () {
-                    makeChangeShiftRequest()
-                });
+                changeOption = document.createElement('div')
+                changeOption.innerHTML = '<div class="Vwe4Vb MbhUzd" jsname="ksKsZd"></div><div class="ZFr60d CeoRYc"></div><span jsslot="" class="CwaK9"><span class="RveJvd snByac"><span class="AclISc">Cambiar turno</span></span></span>';
+                changeOption.setAttribute('id', 'changeOption')
+                changeOption.setAttribute('role', 'button')
+                changeOption.setAttribute('class', 'U26fgb O0WRkf oG5Srb C0oVfc ZGVUP Ztzsdd KKjvXb M9Bg4d')
+                changeOption.setAttribute('tabindex', '0');
+                responseOptions.parentNode.insertBefore(changeOption, responseOptions.nextSibling);
+                changeOption.onclick = makeChangeShiftRequest;
             }
 
         }
