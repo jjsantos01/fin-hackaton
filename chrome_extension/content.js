@@ -77,7 +77,7 @@ const execute = () => {
     const eventTitleElement = document.getElementById('rAECCd')
 
     // Event details modal is closed or the event is not a support chat event
-    if (eventTitleElement == null || !eventTitleElement.innerText.startsWith('chat:')) {
+    if (eventTitleElement == null || !eventTitleElement.innerText.startsWith('chat:') || eventTitleElement.innerText.search('reemplazo') > 0) {
         return;
     }
 
