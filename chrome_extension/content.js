@@ -63,7 +63,9 @@ const makeChangeShiftRequest = (originalShiftInfo) => {
             localStorage.setItem('replacement', data.name)
             spinner.setAttribute('hidden', '')
             alert('Se envió el solicitud de cambio de turno')
-        })
+        }).catch(() => {
+            alert('Algo salió mal con la solicitud. Por favor, inténtelo de nuevo más tarde.')
+    })
 
 
 }
