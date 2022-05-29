@@ -2,13 +2,21 @@ MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 
 const ENDPOINT = 'https://lit-dusk-60294.herokuapp.com/api/v1/change-shift'
 
+const showLoading = () => {
+    const spinner = document.getElementById("spinner");
+    spinner.removeAttribute('hidden');
+}
+
+const hideLoading = () => {
+    const spinner = document.getElementById("spinner");
+    spinner.setAttribute('hidden', '')
+}
+
 const makeChangeShiftRequest = () => {
     // Extract date and time of the event
     const dateElement = document.getElementsByClassName('amqcKf')[0]
 
-    // Show Loading
-    const spinner = document.getElementById("spinner");
-    spinner.removeAttribute('hidden');
+    showLoading();
 
     fetch(ENDPOINT, {
         method: "post", headers: {
@@ -20,11 +28,13 @@ const makeChangeShiftRequest = () => {
         })
     }).then(response => response.json())
         .then(() => {
-            spinner.setAttribute('hidden', '')
+            hideLoading();
             alert('Se envió el solicitud de cambio de turno')
+
+            // Reload the page on successful change!
             location.reload();
         }).catch(() => {
-        spinner.setAttribute('hidden', '')
+        hideLoading();
         alert('Algo salió mal con la solicitud. Por favor, inténtelo de nuevo más tarde.')
     })
 
